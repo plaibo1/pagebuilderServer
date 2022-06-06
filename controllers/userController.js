@@ -57,10 +57,10 @@ class UserController {
     }
 
     async getFile(req, res) {
-        
-        // return res.download(`http://localhost:5000/usersSites/99e9736c-19e5-45ed-87f6-9a28407f02dc.html`)
 
-        return res.json('get get eetgterg ')
+        const {filename} = req.params;
+        
+        return res.download(`static/usersSites/${filename}`)
 
     }
 
@@ -69,17 +69,14 @@ class UserController {
             const {myHtml, webSiteName} = req.body;
             const filePath = path.resolve(__dirname, '..', 'static', 'css', 'index.html')
             const filePathCSS = path.resolve(__dirname, '..', 'static', 'css', 'style.css')
-            
 
             let fileName = uuid.v4() + ".html";
-
-            // const pathToSaveHTML = `${__dirname}/../static/usersSites/${fileName}`
 
             if (!myHtml.length) return res.json('0 elements')
 
             if (!webSiteName) return res.json('неуказано имя сайта')
 
-            let elementsHTML;
+            let elementsHTML = '';
 
              myHtml.forEach(element => {
                  elementsHTML += element.toString()
@@ -90,12 +87,14 @@ class UserController {
                 if (err) return res.json('some err')
     
                 const txt = data.toString().replace(/\r\n/g, '').replace(/myNameIsSecretName/g, webSiteName)
-                const resultNoCSS = txt.replace(/myWinWord/g, elementsHTML)
+
+                const resultNoCSS = txt.replace(/myWinWordmyWinWordmyWinWordmyWinWord/g, elementsHTML)
+
 
                 fs.readFile(filePathCSS, 'utf-8', (err, data) => {
                     if (err) return res.json('some err')
                     
-                    const FINAL_PAGE = resultNoCSS.replace(/iwanamystyleseehereSECRETKEY/g, data.toString())
+                    const FINAL_PAGE = resultNoCSS.replace(/iwanamystyleseehereSECRETKEY/g, `<style>${data.toString()}</style>`)
 
                     fs.writeFile(`${__dirname}/../static/usersSites/${fileName}`, FINAL_PAGE, function(err) {
                         if(err) {
@@ -103,14 +102,15 @@ class UserController {
                         }
 
                         console.log("The file was saved!");
-                        return res.download(`static/usersSites/${fileName}`, err => console.log('errrrrrr', err))
-                    
+                        
+                        return res.json({fileName});
                     });
 
                     
                 })
     
             });
+
         }
         catch(err) {
             console.log(err)

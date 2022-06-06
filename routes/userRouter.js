@@ -12,6 +12,6 @@ router.post('/login', userController.login)
 router.get('/auth', authMiddleware, userController.check)
 
 router.post('/file', userController.postFile)
-router.get('/file', userController.getFile)
+router.get('/file/:filename', userController.getFile)
 
 module.exports = router
