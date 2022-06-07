@@ -1,9 +1,10 @@
 {
   "name": "pagebuilderserver",
   "version": "1.0.0",
-  "description": "",
+  "description": "a really cool app",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "dev": "nodemon index.js"
   },
   "author": "",
