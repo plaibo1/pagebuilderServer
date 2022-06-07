@@ -14,7 +14,7 @@ const { Sequelize } = require('sequelize');
 // )
 
 module.exports = new Sequelize(
-    process.env.DATABASE_URL,
+    process.env.HEROKU_POSTGRESQL_NAVY_URL,
     {
         dialect: 'postgres'
     }
