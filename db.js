@@ -12,7 +12,7 @@ const { Sequelize } = require('sequelize');
 // )
 
 module.exports = new Sequelize(
-    process.env.HEROKU_POSTGRESQL_NAVY_URL,
+    process.env.DB_CONNECT_URL,
     {
         dialect: 'postgres',
         dialectOptions: {
