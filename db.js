@@ -15,11 +15,11 @@ module.exports = new Sequelize(
     process.env.DB_CONNECT_URL,
     {
         dialect: 'postgres',
-        // dialectOptions: {
-        //     ssl: {
-        //       require: true,
-        //       rejectUnauthorized: false
-        //     }
-        //   }
+        dialectOptions: {
+            ssl: {
+              require: true,
+              rejectUnauthorized: false
+            }
+          }
     }
 )
