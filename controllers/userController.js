@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const ApiError = require("../error/apiError");
 const { User } = require("../models/models");
+const { UsersSavesSites } = require('../models/models');
 const bcrypt = require('bcrypt');
 const fs = require('fs')
 const path = require('path')
@@ -114,6 +115,66 @@ class UserController {
         }
         catch(err) {
             console.log(err)
+        }
+    }
+
+    async createSaveSite(req, res) {
+        try {
+            const {siteInfo, userId} = req.body;
+
+            const saveSite = await UsersSavesSites.create({siteInfo, userId});
+            return res.json(saveSite);
+        }
+        catch(err) {
+            console.log(err)
+            return res.json(err)
+        }
+    }
+
+    async getSavesSites(req, res) {
+        try {
+
+            const {userId} = req.params
+
+            if (!userId) return res.json('kakaya to error')
+
+            const saveSites = await UsersSavesSites.findAll({where: {userId}})
+            return res.json(saveSites)
+
+        }
+        catch(err) {
+            console.log('err----', err)
+            return res.json(err)
+        }
+    }
+
+    async updateSite (req, res) {
+        try {
+            const {siteInfo, userId} = req.body;
+
+            if(!siteInfo) return res.json('siteInfo error') 
+            if(!userId) return res.json('userId error') 
+
+            const saveSite = await UsersSavesSites.update({siteInfo}, {where: {id: userId}})
+
+            return res.json('siteWasSave')
+        }
+        catch(err) {
+            console.log(err)
+            return res.json(err)
+        }
+    }
+
+    async deleteSite (req, res) {
+        try {
+            const {id} = req.params;
+
+            const deleteSite = await UsersSavesSites.destroy({where: {id}});
+            return res.json('siteWasDelete');
+        }
+        catch(err) {
+            console.log(err)
+            return res.json(err)
         }
     }
 

@@ -9,6 +9,15 @@ const User = sequelize.define('user', {
     role: {type: DataTypes.STRING, defaultValue: "USER"}
 })
 
+const UsersSavesSites = sequelize.define('usersSavesSites', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    siteInfo: {type: DataTypes.JSON, allowNull: false}
+})
+
+User.hasMany(UsersSavesSites);
+UsersSavesSites.belongsTo(User);
+
+
 const Elements = sequelize.define('elements', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     elementName: {type: DataTypes.JSON, allowNull: false}
@@ -44,6 +53,8 @@ const ImagesData = sequelize.define('imagesData', {
 })
 
 
+
+
 const ALLELEMENTS = [
     HEADERS = {
       name: 'Headers',
@@ -67,6 +78,7 @@ const ALLELEMENTS = [
 
 module.exports = {
     User,
+    UsersSavesSites,
     Headers,
     Elements,
     Features,
