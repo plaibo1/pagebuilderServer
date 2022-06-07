@@ -14,6 +14,12 @@ const { Sequelize } = require('sequelize');
 module.exports = new Sequelize(
     process.env.HEROKU_POSTGRESQL_NAVY_URL,
     {
-        dialect: 'postgres'
+        dialect: 'postgres',
+        dialectOptions: {
+            ssl: {
+              require: true,
+              rejectUnauthorized: false
+            }
+          }
     }
 )
