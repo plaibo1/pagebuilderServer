@@ -1,25 +1,18 @@
 const { Sequelize } = require('sequelize');
 
-// module.exports = new Sequelize(
-//     process.env.DB_NAME,
-//     process.env.DB_USER,
-//     process.env.DB_PASSWORD,
-//     {
-//         dialect: 'postgres',
-//         host: process.env.DB_HOST,
-//         port: process.env.DB_PORT
-//     }
-// )
+const prodSettings = {
+    dialectOptions: {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false
+        }
+      }
+}
 
 module.exports = new Sequelize(
     process.env.DB_CONNECT_URL,
     {
         dialect: 'postgres',
-        dialectOptions: {
-            ssl: {
-              require: true,
-              rejectUnauthorized: false
-            }
-          }
+        ...(process.env.PROD === "isProd" && prodSettings)
     }
 )

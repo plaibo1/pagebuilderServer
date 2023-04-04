@@ -106,10 +106,7 @@ class UserController {
                         
                         return res.json({fileName});
                     });
-
-                    
                 })
-    
             });
 
         }
