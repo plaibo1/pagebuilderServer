@@ -11,7 +11,9 @@ const path = require('path')
 const PORT = process.env.PORT || 5000;
 
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: ['https://pagebuilder-neon.vercel.app/', 'http://localhost:3000/']
+}));
 app.use(express.json())
 app.use(express.static(path.resolve(__dirname, 'static')))
 app.use(fileUpload({}))
